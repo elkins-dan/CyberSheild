@@ -1,0 +1,76 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model MachineLearningModel {
+  accuracy     Float?
+  createdAt    DateTime @default(now())
+  id           String   @id @default(cuid())
+  modelName    String?
+  trainingData Json?
+  updatedAt    DateTime @updatedAt
+}
+
+model BlockchainDatabase {
+  chainName    String?
+  createdAt    DateTime  @default(now())
+  creationDate DateTime?
+  data         Json?
+  id           String    @id @default(cuid())
+  updatedAt    DateTime  @updatedAt
+}
+
+model CybersecurityEvent {
+  createdAt      DateTime                         @default(now())
+  eventSeverity  Int?
+  eventTimestamp DateTime?
+  eventType      EnumCybersecurityEventEventType?
+  id             String                           @id @default(cuid())
+  updatedAt      DateTime                         @updatedAt
+}
+
+model IoTDevice {
+  createdAt  DateTime             @default(now())
+  deviceName String?
+  deviceType String?
+  id         String               @id @default(cuid())
+  status     EnumIoTDeviceStatus?
+  updatedAt  DateTime             @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
+
+model Role {
+  createdAt   DateTime              @default(now())
+  id          String                @id @default(cuid())
+  permissions EnumRolePermissions[]
+  roleName    String?
+  updatedAt   DateTime              @updatedAt
+}
+
+enum EnumCybersecurityEventEventType {
+  Option1
+}
+
+enum EnumIoTDeviceStatus {
+  Option1
+}
+
+enum EnumRolePermissions {
+  Option1
+}
