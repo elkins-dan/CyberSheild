@@ -1,0 +1,108 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DB_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Transaction {
+  block           Block?    @relation(fields: [blockId], references: [id])
+  blockId         String?
+  createdAt       DateTime  @default(now())
+  fromAddress     String?
+  id              String    @id @default(cuid())
+  timestamp       DateTime?
+  toAddress       String?
+  transactionHash String?
+  updatedAt       DateTime  @updatedAt
+  value           Float?
+}
+
+model Block {
+  blockHash         String?
+  createdAt         DateTime      @default(now())
+  id                String        @id @default(cuid())
+  nonce             Int?
+  previousBlockHash String?
+  timestamp         DateTime?
+  transactions      Transaction[]
+  updatedAt         DateTime      @updatedAt
+}
+
+model Metric {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Device {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Alert {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Policy {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Node {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  ipAddress String?
+  nodeId    String?
+  port      Int?
+  status    String?
+  updatedAt DateTime @updatedAt
+}
+
+model IoTAlert {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Prediction {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model TrainingData {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Model {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model Vulnerability {
+  createdAt DateTime @default(now())
+  id        String   @id @default(cuid())
+  updatedAt DateTime @updatedAt
+}
+
+model User {
+  createdAt DateTime @default(now())
+  email     String?  @unique
+  firstName String?
+  id        String   @id @default(cuid())
+  lastName  String?
+  password  String
+  roles     Json
+  updatedAt DateTime @updatedAt
+  username  String   @unique
+}
